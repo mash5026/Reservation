@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurant Table Map</title>
+    <style>
+        /* Style for the table map */
+        .table {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Style for the tooltip */
+        .tooltip {
+            position: absolute;
+            display: none;
+            background-color: #333;
+            color: #fff;
+            padding: 5px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+        /* Make links inside the map area non-disruptive */
+        #table-map a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+       h1 {text-align: center;}
+    </style>
+</head>
+<body>
+    <h1>Restaurant Table Map</h1>
+    <div id="table-map" style="position: relative; width: 1800px; height: 800px; background-image: url('{% static "D:\Reservration\restaurant_reservation\staticfiles\images\plan.JPG" %}');">
+        {% for table in tables %}
+            <a href="{% url 'table_detail' table.id %}" style="position: absolute; left: {{ table.location_x }}px; top: {{ table.location_y }}px;">
+                <div class="table" data-table-number="{{ table.capacity }}">{{ table.name }}</div>
+            </a>
+        {% endfor %}
+    </div>
+    <div id="tooltip" class="tooltip"></div>
+
+    <script>
+        // JavaScript to handle the hover effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const tables = document.querySelectorAll('.table');
+            const tooltip = document.getElementById('tooltip');
+
+            tables.forEach(table => {
+                table.addEventListener('mouseenter', function(event) {
+                    const tableNumber = event.target.getAttribute('data-table-number');
+                    tooltip.textContent = `ظرفیت ${tableNumber} نفر`;
+                    tooltip.style.display = 'block';
+                    tooltip.style.left = `${event.pageX + 10}px`; // Position the tooltip slightly away from the cursor
+                    tooltip.style.top = `${event.pageY + 10}px`;
+                });
+
+                table.addEventListener('mouseleave', function() {
+                    tooltip.style.display = 'none';
+                });
+
+                table.addEventListener('mousemove', function(event) {
+                    tooltip.style.left = `${event.pageX + 10}px`;
+                    tooltip.style.top = `${event.pageY + 10}px`;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
