@@ -18,7 +18,7 @@ class Reservation(models.Model):
     date = jmodels.jDateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    #user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ('table', 'date', 'start_time', 'end_time')

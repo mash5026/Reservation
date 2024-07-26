@@ -6,67 +6,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Table {{ table.number }} Details</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <title> اطلاعات میز {{ table.number }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
     <style>
+        body, header, main, h1, ul, li, a {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #EDF3F8;
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
+
         header {
-            background-color: #333;
-            color: #fff;
+            background-color: #444444D9;
+            color: #ffffff;
             width: 100%;
-            padding: 1rem 0;
+            padding: 2px 20px;
             text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         main {
-            background-color: #fff;
-            padding: 2rem;
-            margin: 2rem 0;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 80%;
+            background-color: #ffffff;
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
             max-width: 800px;
         }
+
         h1 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
         }
+
         ul {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
+
         li {
-            background-color: #f9f9f9;
-            margin: 0.5rem 0;
-            padding: 1rem;
-            border-radius: 4px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            background-color: #f8f8f8;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
-        a {
+
+        .custom-button {
             display: inline-block;
-            margin: 1rem 0.5rem;
-            padding: 0.5rem 1rem;
-            color: #fff;
-            background-color: #007BFF;
+            margin: 15px 10px;
+            padding: 10px 20px;
+            color: #ffffff; /* White text */
+            background-color: #95999e; /* Grey background */
             text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: background-color 0.3s, color 0.3s;
         }
-        a:hover {
-            background-color: #0056b3;
+
+        .custom-button:hover {
+            background-color: #747474; /* Darker grey on hover */
+            color: #fff; /* Keep text white */
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Table {{ table.number }} Details</h1>
+        <h1>{{ table.number }} اطلاعات میز</h1>
     </header>
     <main>
         <ul>
@@ -74,8 +91,10 @@
                 <li>{{ reservation.date|jformat:"%A %d %B %Y" }}: {{ reservation.start_time }} - {{ reservation.end_time }}</li>
             {% endfor %}
         </ul>
-        <a href="{% url 'make_reservation' table.id %}">Make a Reservation</a>
-        <a href="{% url 'table_map' %}">Back to Home Page</a>
+        <div style="text-align: center;">
+            <a href="{% url 'make_reservation' table.id %}" class="custom-button">رزرو کردن</a>
+            <a href="{% url 'table_map' %}" class="custom-button">بازگشت به صفحه رزرو</a>
+        </div>
     </main>
 </body>
 </html>

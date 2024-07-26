@@ -1,17 +1,24 @@
+{% load i18n %}
 {% load jalali_tags %}
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">  <!-- Added dir="rtl" for right-to-left text direction -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Make a Reservation</title>
+    <title>رزرو میز</title>
     <!-- Persian Datepicker CSS -->
     <link rel="stylesheet" href="{% static 'admin/jquery.ui.datepicker.jalali/themes/base/jquery-ui.min.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
     <style>
+        body, header, main, h1, form, button, a, label {
+            font-family: 'Vazirmatn', sans-serif;
+            direction: rtl; /* Ensures text direction is right-to-left */
+        }
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #EDF3F8;
             margin: 0;
             padding: 0;
             display: flex;
@@ -19,11 +26,11 @@
             align-items: center;
         }
         header {
-            background-color: #333;
-            color: #fff;
+            background-color: #444444D9;
+            color: #ffffff;
             width: 100%;
-            padding: 1rem 0;
-            text-align: center;
+            padding: 2px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         main {
             background-color: #fff;
@@ -37,31 +44,40 @@
         h1 {
             font-size: 2rem;
             margin-bottom: 1rem;
+            text-align: center; /* Ensures header is centered */
         }
         form {
             display: flex;
             flex-direction: column;
+            align-items: center; /* Center aligns all form elements */
         }
-        button {
-            padding: 0.5rem 1rem;
-            color: #fff;
-            background-color: #007BFF;
-            border: none;
+        
+        input, select, textarea {
+            width: 100%; /* Ensures all input types are the same width */
+            padding: 8px;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            display: inline-block;
+            border: 1px solid #ccc;
             border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+            box-sizing: border-box;
+            text-align: start; /* For text inputs */
         }
-        button:hover {
-            background-color: #0056b3;
-        }
-        a {
-            margin-top: 1rem;
-            color: #007BFF;
+        .custom-button {
+            display: inline-block;
+            margin: 15px 10px;
+            padding: 10px 20px;
+            color: #ffffff; /* White text */
+            background-color: #95999e; /* Grey background */
             text-decoration: none;
-            transition: color 0.3s;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: background-color 0.3s, color 0.3s;
         }
-        a:hover {
-            color: #0056b3;
+        .custom-button:hover {
+            background-color: #747474; /* Darker grey on hover */
+            color: #fff; /* Keep text white */
         }
         .errors {
             background-color: #ffdddd;
@@ -69,42 +85,42 @@
             padding: 1rem;
             border-radius: 4px;
             margin-bottom: 1rem;
+            width: 100%;
         }
         .errors ul {
             list-style: none;
             padding: 0;
         }
-    </style>
-    <script>
-        function validateForm() {
-            const form = document.querySelector('form');
-            const inputs = form.querySelectorAll('input[required], textarea[required], select[required]');
-            let valid = true;
-
-            inputs.forEach(input => {
-                if (!input.checkValidity()) {
-                    input.style.border = '2px solid red';
-                    valid = false;
-                } else {
-                    input.style.border = '1px solid #ccc';
-                }
-            });
-
-            return valid;
-        }
-    </script>
+        
+</style>   
 </head>
 <body>
     <header>
-        <h1>Make a Reservation for Table {{ table.number }}</h1>
+        <h1>{% trans "رزرو میز برای شماره" %} {{ table.number }}</h1>
     </header>
     <main>
         <form method="post" onsubmit="return validateForm()">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Reserve</button>
-            <a href="{% url 'table_map' %}">Back to Home Page</a>
+            <div class="form-group">
+                <label for="table">میز:</label>
+                {{ form.table }}
+            </div>
+            <div class="form-group">
+                <label for="date">تاریخ:</label>
+                {{ form.date }}
+            </div>
+            <div class="form-group">
+                <label for="start_time">زمان شروع:</label>
+                {{ form.start_time }}
+            </div>
+            <div class="form-group">
+                <label for="end_time">زمان پایان:</label>
+                {{ form.end_time }}
+            </div>
+            <button type="submit" class="custom-button">رزرو</button>
+            <a href="{% url 'table_map' %}" class="custom-button">بازگشت به صفحه رزرو</a>
         </form>
+        
 
         {% if form.errors %}
         <div class="errors">

@@ -4,6 +4,9 @@ from django.core.exceptions import ValidationError
 from .models import Table, Reservation
 from .forms import ReservationForm
 
+def home(request):
+    return render(request, 'reservations/home.html')
+    
 def table_map(request):
     tables = Table.objects.all()
     return render(request, 'reservations/table_map.html', {'tables': tables})
