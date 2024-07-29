@@ -32,8 +32,8 @@ class Reservation(models.Model):
             end_time__gt=self.start_time,
         ).exclude(id=self.id)
 
-        if overlapping_reservations.exists():
-            raise ValidationError("This reservation overlaps with another reservation.")
+        # if overlapping_reservations.exists():
+        #     raise ValidationError("This reservation overlaps with another reservation.")
 
     def save(self, *args, **kwargs):
         self.clean()

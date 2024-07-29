@@ -23,8 +23,8 @@
         }
 
         .form-control {
-            direction: ltr; /* Ensures numbers and text are entered left-to-right */
-            text-align: left; /* Align text inside the input to the left */
+            direction: rtl; /* Ensures numbers and text are entered left-to-right */
+            text-align: right; /* Align text inside the input to the left */
         }
 
         .nav-flex-row {
@@ -272,7 +272,7 @@
 
     <section class="section-intro">
         <header>
-            <h1>Archano</h1>
+            <h1>کافه رستوران آرکانو</h1>
         </header>
         <div class="link-to-book-wrapper">
             <a class="link-to-book" href="{% url 'table_map' %}">رزرو میز</a>
@@ -319,10 +319,10 @@
                 <form class="media-centered">
                     <div class="form-group">
                         <p>لطفا شماره خود را بگذارید تا برای رزرو تماس بگیریم</p>
-                        <input type="name" class="form-control" id="exampleInputName1" placeholder="Enter your name">
+                        <input type="name" class="form-control" id="exampleInputName1" placeholder="نام شما">
                     </div>
                     <div class="form-group">
-                        <input type="number" class="form-control" id="exampleInputphoneNumber1" placeholder="Enter your phone number">
+                        <input type="number" class="form-control" id="exampleInputphoneNumber1" placeholder="شماره تماس">
                     </div>
                     <button type="submit" class="btn btn-primary">ثبت</button>
                 </form>
